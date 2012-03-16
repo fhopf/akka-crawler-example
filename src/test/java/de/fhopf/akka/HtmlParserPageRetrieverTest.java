@@ -25,7 +25,7 @@ public class HtmlParserPageRetrieverTest {
         assertNotNull(content.getTitle());
         
         logger.info(content.toString());
-        System.out.println(content);
+        //System.out.println(content);
     }
     
 }
