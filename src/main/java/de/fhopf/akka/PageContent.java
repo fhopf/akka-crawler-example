@@ -11,8 +11,10 @@ public class PageContent {
     private final List<String> linksToFollow;
     private final String title;
     private final String content;
+    private final String path;
 
-    public PageContent(List<String> linksToFollow, String title, String content) {
+    public PageContent(String path, List<String> linksToFollow, String title, String content) {
+        this.path = path;
         this.linksToFollow = linksToFollow;
         this.title = title;
         this.content = content;
@@ -30,6 +32,10 @@ public class PageContent {
         return title;
     }
 
+    public String getPath() {
+        return path;
+    }
+    
     @Override
     public String toString() {
         return "PageContent{title=" + title + ", content=" + content + ", linksToFollow=" + linksToFollow + "}";

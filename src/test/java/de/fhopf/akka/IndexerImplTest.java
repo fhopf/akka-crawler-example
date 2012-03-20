@@ -27,7 +27,7 @@ public class IndexerImplTest {
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35, new StandardAnalyzer(Version.LUCENE_35));
         IndexWriter writer = new IndexWriter(index, config);
         IndexerImpl indexerImpl = new IndexerImpl(writer);
-        PageContent content = new PageContent(new ArrayList<String>(), "This is the title", "This is the content");
+        PageContent content = new PageContent("http://path", new ArrayList<String>(), "This is the title", "This is the content");
         indexerImpl.index(content);
         indexerImpl.commit();
         

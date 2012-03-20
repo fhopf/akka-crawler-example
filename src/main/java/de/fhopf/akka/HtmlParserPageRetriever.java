@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Florian Hopf
  */
-class HtmlParserPageRetriever {
+public class HtmlParserPageRetriever implements PageRetriever {
 
     private final String baseUrl;
     private static final Logger logger = LoggerFactory.getLogger(HtmlParserPageRetriever.class);
@@ -26,10 +26,12 @@ class HtmlParserPageRetriever {
         this.baseUrl = baseUrl;
     }
 
+    @Override
     public PageContent fetchPageContent(String url) {
+        logger.debug("Fetching {}", url);
         try {
             Parser parser = new Parser(url);
-            PageContentVisitor visitor = new PageContentVisitor(baseUrl);
+            PageContentVisitor visitor = new PageContentVisitor(baseUrl, url);
             parser.visitAllNodesWith(visitor);
             
             return visitor.getContent();
@@ -46,17 +48,20 @@ class HtmlParserPageRetriever {
         private String title;
 
         private final String baseUrl;
+        private final String currentUrl;
         
-        public PageContentVisitor(String baseUrl) {
+        public PageContentVisitor(String baseUrl, String currentUrl) {
             super(true);
             this.baseUrl = baseUrl;
+            this.currentUrl = currentUrl;
+            
         }
 
         @Override
         public void visitTag(Tag tag) {
             if (tag instanceof LinkTag) {
                 LinkTag linkTag = (LinkTag) tag;
-                if (linkTag.getLink().startsWith(baseUrl)) {
+                if (linkTag.getLink().startsWith(baseUrl) && isProbablyHtml(linkTag.getLink())) {
                     logger.debug("Using link pointing to {}", linkTag.getLink());
                     linksToVisit.add(linkTag.getLink());
                 } else {
@@ -72,7 +77,11 @@ class HtmlParserPageRetriever {
         }
         
         public PageContent getContent() {
-            return new PageContent(linksToVisit, title, content);
+            return new PageContent(currentUrl, linksToVisit, title, content);
+        }
+
+        private boolean isProbablyHtml(String link) {
+            return link.endsWith(".html") || link.endsWith("/");
         }
     }
 }

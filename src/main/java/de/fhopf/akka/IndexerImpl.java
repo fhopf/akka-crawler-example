@@ -10,7 +10,7 @@ import org.apache.lucene.index.IndexWriter;
  * Indexer Impl, contaijns writer state.
  * @author flo
  */
-class IndexerImpl {
+public class IndexerImpl implements Indexer {
     
     private final IndexWriter indexWriter;
 
@@ -18,6 +18,7 @@ class IndexerImpl {
         this.indexWriter = indexWriter;
     }
     
+    @Override
     public void index(PageContent pageContent) {
         try {
             indexWriter.addDocument(toDocument(pageContent));
@@ -30,11 +31,13 @@ class IndexerImpl {
     
     private Document toDocument(PageContent content) {
         Document doc = new Document();
+        doc.add(new Field("id", content.getPath(), Field.Store.YES, Field.Index.NOT_ANALYZED));
         doc.add(new Field("title", content.getTitle(), Field.Store.YES, Field.Index.ANALYZED));
         doc.add(new Field("content", content.getContent(), Field.Store.NO, Field.Index.ANALYZED));
         return doc;
     }
     
+    @Override
     public void commit() {
         try {
             indexWriter.commit();
@@ -43,6 +46,18 @@ class IndexerImpl {
         } catch (IOException ex) {
             throw new IllegalStateException(ex);
         }
+    }
+
+    @Override
+    public void close() {
+        try {
+            indexWriter.close(true);
+        } catch (CorruptIndexException ex) {
+            throw new IllegalStateException(ex);
+        } catch (IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+                
     }
     
 }
