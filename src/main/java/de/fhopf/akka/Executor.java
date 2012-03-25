@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -50,6 +52,11 @@ public class Executor {
             TopDocs result = searcher.search(new MatchAllDocsQuery(), 100);
 
             logger.info("Found {} results", result.totalHits);
+            
+            for(ScoreDoc scoreDoc: result.scoreDocs) {
+                Document doc = searcher.doc(scoreDoc.doc);
+                logger.debug(doc.get("id"));
+            }
 
             searcher.close();
         } catch (Exception ex) {

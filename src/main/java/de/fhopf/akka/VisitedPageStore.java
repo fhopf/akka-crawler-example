@@ -12,6 +12,7 @@ public class VisitedPageStore {
 
     private Set<String> pagesToVisit = new HashSet<String>();
     private Set<String> allPages = new HashSet<String>();
+    private Set<String> inProgress = new HashSet<String>();
     
     public void add(String page) {
         if (!allPages.contains(page)) {
@@ -27,15 +28,29 @@ public class VisitedPageStore {
     }
     
     public void finished(String page) {
-        pagesToVisit.remove(page);
+        inProgress.remove(page);
     }
     
     public String getNext() {
         if (pagesToVisit.isEmpty()) {
             return null;
         } else {
-            return pagesToVisit.iterator().next();
+            String next = pagesToVisit.iterator().next();
+            pagesToVisit.remove(next);
+            inProgress.add(next);
+            return next;
         }
     }
     
+    public Collection<String> getNextBatch() {
+        Set<String> pages = new HashSet<String>();
+        pages.addAll(pagesToVisit);
+        pagesToVisit.clear();
+        inProgress.addAll(pages);
+        return pages;
+    }
+    
+    public boolean isFinished() {
+        return pagesToVisit.isEmpty() && inProgress.isEmpty();
+    }
 }
