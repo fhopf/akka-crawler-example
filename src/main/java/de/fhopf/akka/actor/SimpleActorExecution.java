@@ -22,9 +22,10 @@ public class SimpleActorExecution implements Execution {
 
             @Override
             public Actor create() {
-                return new Master(writer, new HtmlParserPageRetriever(path), countDownLatch);
+                return new SimpleActorMaster(new HtmlParserPageRetriever(path), writer, countDownLatch);
             }
         }));
+
         master.tell(path);
         try {
             countDownLatch.await();

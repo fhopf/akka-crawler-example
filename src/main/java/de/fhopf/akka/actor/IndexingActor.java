@@ -8,7 +8,7 @@ import de.fhopf.akka.PageContent;
  *
  * @author flo
  */
-class IndexingActor extends UntypedActor {
+public class IndexingActor extends UntypedActor {
 
     public static final String COMMIT_MESSAGE = "COMMIT";
     public static final String COMMITTED_MESSAGE = "COMMITTED";

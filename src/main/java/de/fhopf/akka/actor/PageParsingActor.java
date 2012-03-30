@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * Downloads pages and passes these on to the next actor.
  * @author flo
  */
-class PageParsingActor extends UntypedActor {
+public class PageParsingActor extends UntypedActor {
 
     private final PageRetriever pageRetriever;
     
