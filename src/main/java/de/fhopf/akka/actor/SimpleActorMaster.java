@@ -4,47 +4,56 @@ import akka.actor.Actor;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.actor.UntypedActorFactory;
+
 import de.fhopf.akka.IndexerImpl;
 import de.fhopf.akka.PageRetriever;
-import java.util.concurrent.CountDownLatch;
+
 import org.apache.lucene.index.IndexWriter;
 
+import java.util.concurrent.CountDownLatch;
+
+
 /**
- *
- * @author Florian Hopf, Synyx GmbH & Co. KG
+ * @author  Florian Hopf, Synyx GmbH & Co. KG
  */
 class SimpleActorMaster extends Master {
 
     private final ActorRef indexer;
     private final ActorRef parser;
 
-    public SimpleActorMaster(final PageRetriever pageRetriever, final IndexWriter indexWriter, final CountDownLatch latch) {
+    public SimpleActorMaster(final PageRetriever pageRetriever, final IndexWriter indexWriter,
+        final CountDownLatch latch) {
+
         super(latch);
         this.indexer = getContext().actorOf(new Props(new UntypedActorFactory() {
 
-            @Override
-            public Actor create() {
-                return new IndexingActor(new IndexerImpl(indexWriter));
-            }
-        }));
+                        @Override
+                        public Actor create() {
+
+                            return new IndexingActor(new IndexerImpl(indexWriter));
+                        }
+                    }));
+
         this.parser = getContext().actorOf(new Props(new UntypedActorFactory() {
 
-            @Override
-            public Actor create() {
-                return new PageParsingActor(pageRetriever);
-            }
-        }));
+                        @Override
+                        public Actor create() {
+
+                            return new PageParsingActor(pageRetriever);
+                        }
+                    }));
     }
 
     @Override
     protected ActorRef getIndexer() {
+
         return indexer;
     }
 
+
     @Override
     protected ActorRef getParser() {
+
         return parser;
     }
-    
-    
 }

@@ -1,15 +1,21 @@
 package de.fhopf.akka.actor;
 
-import akka.actor.*;
+import akka.actor.ActorRef;
+import akka.actor.UntypedActor;
+
 import de.fhopf.akka.PageContent;
 import de.fhopf.akka.VisitedPageStore;
-import java.util.concurrent.CountDownLatch;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.CountDownLatch;
+
+
 /**
  * Master actor that coordinates the two actors.
- * @author flo
+ *
+ * @author  flo
  */
 public abstract class Master extends UntypedActor {
 
@@ -18,22 +24,14 @@ public abstract class Master extends UntypedActor {
     private final CountDownLatch countDownLatch;
 
     protected Master(final CountDownLatch latch) {
+
         this.countDownLatch = latch;
     }
 
     @Override
     public void onReceive(Object message) throws Exception {
-        //logger.debug("Received message {}", message);
-        if (message == IndexingActor.COMMITTED_MESSAGE) {
-            logger.info("Shutting down, finished");
-            countDownLatch.countDown();
-        } else if (message instanceof IndexedMessage) {
-            IndexedMessage indexedMessage = (IndexedMessage) message;
-            visitedPageStore.finished(indexedMessage.path);
-            if (visitedPageStore.isFinished()) {
-                getIndexer().tell(IndexingActor.COMMIT_MESSAGE, getSelf());
-            }
-        } else if (message instanceof String) {
+
+        if (message instanceof String) {
             // start
             String start = (String) message;
             visitedPageStore.add(start);
@@ -42,6 +40,7 @@ public abstract class Master extends UntypedActor {
             PageContent content = (PageContent) message;
             getIndexer().tell(content, getSelf());
             visitedPageStore.addAll(content.getLinksToFollow());
+
             if (visitedPageStore.isFinished()) {
                 getIndexer().tell(IndexingActor.COMMIT_MESSAGE, getSelf());
             } else {
@@ -49,10 +48,23 @@ public abstract class Master extends UntypedActor {
                     getParser().tell(page, getSelf());
                 }
             }
+        } else if (message instanceof IndexedMessage) {
+            IndexedMessage indexedMessage = (IndexedMessage) message;
+            visitedPageStore.finished(indexedMessage.path);
+
+            if (visitedPageStore.isFinished()) {
+                getIndexer().tell(IndexingActor.COMMIT_MESSAGE, getSelf());
+            }
+        } else if (message == IndexingActor.COMMITTED_MESSAGE) {
+            logger.info("Shutting down, finished");
+            getContext().system().shutdown();
+            countDownLatch.countDown();
         }
     }
 
+
     protected abstract ActorRef getIndexer();
+
 
     protected abstract ActorRef getParser();
 }
