@@ -17,7 +17,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  *
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class IndexerImplTest {
 

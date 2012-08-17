@@ -24,7 +24,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Fetches and parses pages in parallel.
  *
- * @author  flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 class ParallelMaster extends Master {
 

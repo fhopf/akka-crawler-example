@@ -6,8 +6,8 @@ import de.fhopf.akka.Executor;
 import org.apache.lucene.index.IndexWriter;
 
 /**
- *
- * @author flo
+ * Indexes pages sequentially.
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class SequentialExecution implements Execution {
 

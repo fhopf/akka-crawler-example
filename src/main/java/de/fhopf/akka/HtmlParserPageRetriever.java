@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Retrieves the content using HtmlParser.
  *
- * @author Florian Hopf
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class HtmlParserPageRetriever implements PageRetriever {
 

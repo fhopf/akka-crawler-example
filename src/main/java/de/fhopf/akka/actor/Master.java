@@ -15,7 +15,7 @@ import java.util.concurrent.CountDownLatch;
 /**
  * Master actor that coordinates the two actors.
  *
- * @author  flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public abstract class Master extends UntypedActor {
 

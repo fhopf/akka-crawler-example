@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Florian Hopf
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class HtmlParserPageRetrieverTest {
     
@@ -23,7 +23,7 @@ public class HtmlParserPageRetrieverTest {
         assertNotNull(content);
         assertNotNull(content.getContent());
         assertNotNull(content.getTitle());
-        
+        // TODO add more meaningful assertions
         logger.info(content.toString());
         //System.out.println(content);
     }

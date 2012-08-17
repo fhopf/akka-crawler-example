@@ -4,7 +4,7 @@ import org.apache.lucene.index.IndexWriter;
 
 /**
  *
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public interface Execution {
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * The content for a certain page.
- * @author Florian Hopf
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class PageContent {
     

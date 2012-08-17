@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * Base class that provides the index writer, logs the duration and checks the
  * document count. Concrete
  *
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class Executor {
 

@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Experiment with some of the html parser functionality.
  *
- * @author Florian Hopf
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class HtmlParserTest {
 
@@ -22,6 +22,7 @@ public class HtmlParserTest {
         ObjectFindingVisitor visitor = new ObjectFindingVisitor(LinkTag.class);
         parser.visitAllNodesWith(visitor);
         Node[] links = visitor.getTags();
+        // TODO this could use some more meaningful assertions
         assertTrue(links.length > 0);
         for (int i = 0; i < links.length; i++) {
             LinkTag linkTag = (LinkTag) links[i];

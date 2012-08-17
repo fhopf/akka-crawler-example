@@ -5,13 +5,13 @@ import de.fhopf.akka.Indexer;
 import de.fhopf.akka.PageContent;
 
 /**
- *
- * @author flo
+ * Indexes pages in Lucene.
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class IndexingActor extends UntypedActor {
 
-    public static final String COMMIT_MESSAGE = "COMMIT";
-    public static final String COMMITTED_MESSAGE = "COMMITTED";
+    public static final Object COMMIT_MESSAGE = new Object();
+    public static final Object COMMITTED_MESSAGE = new Object();
     
     private final Indexer indexer;
 

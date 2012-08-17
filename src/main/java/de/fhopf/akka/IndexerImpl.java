@@ -8,7 +8,7 @@ import org.apache.lucene.index.IndexWriter;
 
 /**
  * Indexer Impl, contaijns writer state.
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class IndexerImpl implements Indexer {
     

@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Downloads pages and passes these on to the next actor.
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de 
  */
 public class PageParsingActor extends UntypedActor {
 
@@ -26,6 +26,7 @@ public class PageParsingActor extends UntypedActor {
             PageContent content = pageRetriever.fetchPageContent((String) o);
             getSender().tell(content, getSelf());
         } else {
+            // fail on any message we don't expect
             unhandled(o);
         }
     }

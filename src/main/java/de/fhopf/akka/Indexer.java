@@ -6,7 +6,7 @@ package de.fhopf.akka;
 
 /**
  *
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public interface Indexer {
 

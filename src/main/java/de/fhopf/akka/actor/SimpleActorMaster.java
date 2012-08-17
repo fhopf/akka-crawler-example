@@ -14,7 +14,8 @@ import java.util.concurrent.CountDownLatch;
 
 
 /**
- * @author  Florian Hopf, Synyx GmbH & Co. KG
+ * Works with one indexer and one page parser.
+ * @author  Florian Hopf, http://www.florian-hopf.de
  */
 class SimpleActorMaster extends Master {
 

@@ -9,7 +9,7 @@ import org.apache.lucene.index.IndexWriter;
 
 /**
  * Uses multiple actors for fetching and parsing pages.
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class FetchInParallelExecution implements Execution {
 

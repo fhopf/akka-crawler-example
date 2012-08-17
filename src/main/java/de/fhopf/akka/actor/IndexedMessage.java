@@ -2,7 +2,7 @@ package de.fhopf.akka.actor;
 
 /**
  *
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public final class IndexedMessage {
     

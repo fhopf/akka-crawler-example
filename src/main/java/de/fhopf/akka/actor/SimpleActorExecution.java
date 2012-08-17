@@ -10,7 +10,7 @@ import org.apache.lucene.index.IndexWriter;
 /**
  * Runs the example with one actor of each.
  *
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de 
  */
 public class SimpleActorExecution implements Execution {
 

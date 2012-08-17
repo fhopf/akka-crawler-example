@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * Stores the information on which pages have already been retrieved.
- * @author flo
+ * @author Florian Hopf, http://www.florian-hopf.de
  */
 public class VisitedPageStore {
 
