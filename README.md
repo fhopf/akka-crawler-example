@@ -11,4 +11,4 @@ To start the simple actor execution run gradle runActors
 
 To start the parallel page fetching run gradle runParallelActors
 
-The code is only meant as an example on how to implement a producer consumer example in Akka. For more information visit (http://blog.florian-hopf.de/)
+The code is only meant as an example on how to implement a producer consumer example in Akka. For more information visit http://blog.florian-hopf.de/2012/08/getting-rid-of-synchronized-using-akka.html
