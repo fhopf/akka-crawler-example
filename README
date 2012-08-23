@@ -1,6 +1,6 @@
 # Simple Producer Consumer example for Akka in Java
 
-This repository contains 3 ways to implement a simple web crawler:
+This repository contains 3 examples of a simple web crawler:
 * A sequential example
 * An example where the logic is split in 3 Actors
 * An example where the retrieval of the pages is handled by multiple Actors in parallel.
