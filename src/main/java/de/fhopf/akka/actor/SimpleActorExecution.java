@@ -1,11 +1,13 @@
 package de.fhopf.akka.actor;
 
-import akka.actor.*;
+import org.apache.lucene.index.IndexWriter;
+
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
 import de.fhopf.akka.Execution;
 import de.fhopf.akka.Executor;
 import de.fhopf.akka.HtmlParserPageRetriever;
-import java.util.concurrent.CountDownLatch;
-import org.apache.lucene.index.IndexWriter;
 
 /**
  * Runs the example with one actor of each.
@@ -17,22 +19,10 @@ public class SimpleActorExecution implements Execution {
     @Override
     public void downloadAndIndex(final String path, final IndexWriter writer) {
         ActorSystem actorSystem = ActorSystem.create();
-        final CountDownLatch countDownLatch = new CountDownLatch(1);
-        ActorRef master = actorSystem.actorOf(new Props(new UntypedActorFactory() {
+        ActorRef master = actorSystem.actorOf(Props.create(SimpleActorMaster.class, new HtmlParserPageRetriever(path), writer));
 
-            @Override
-            public Actor create() {
-                return new SimpleActorMaster(new HtmlParserPageRetriever(path), writer, countDownLatch);
-            }
-        }));
-
-        master.tell(path);
-        try {
-            countDownLatch.await();
-            actorSystem.shutdown();
-        } catch (InterruptedException ex) {
-            throw new IllegalStateException(ex);
-        }
+        master.tell(path, actorSystem.guardian());
+        actorSystem.awaitTermination();
     }
     
     public static void main(String[] args) {

@@ -1,15 +1,12 @@
 package de.fhopf.akka.actor;
 
-import akka.actor.ActorRef;
-import akka.actor.UntypedActor;
-
-import de.fhopf.akka.PageContent;
-import de.fhopf.akka.VisitedPageStore;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.CountDownLatch;
+import akka.actor.ActorRef;
+import akka.actor.UntypedActor;
+import de.fhopf.akka.PageContent;
+import de.fhopf.akka.VisitedPageStore;
 
 
 /**
@@ -21,12 +18,6 @@ public abstract class Master extends UntypedActor {
 
     private final Logger logger = LoggerFactory.getLogger(Master.class);
     private final VisitedPageStore visitedPageStore = new VisitedPageStore();
-    private final CountDownLatch countDownLatch;
-
-    protected Master(final CountDownLatch latch) {
-
-        this.countDownLatch = latch;
-    }
 
     @Override
     public void onReceive(Object message) throws Exception {
@@ -58,7 +49,6 @@ public abstract class Master extends UntypedActor {
         } else if (message == IndexingActor.COMMITTED_MESSAGE) {
             logger.info("Shutting down, finished");
             getContext().system().shutdown();
-            countDownLatch.countDown();
         }
     }
 
