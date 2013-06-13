@@ -2,7 +2,7 @@ package de.fhopf.akka;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;

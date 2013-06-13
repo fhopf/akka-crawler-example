@@ -3,8 +3,6 @@ package de.fhopf.akka.actor;
 import akka.actor.UntypedActor;
 import de.fhopf.akka.PageContent;
 import de.fhopf.akka.PageRetriever;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Downloads pages and passes these on to the next actor.
@@ -13,8 +11,6 @@ import org.slf4j.LoggerFactory;
 public class PageParsingActor extends UntypedActor {
 
     private final PageRetriever pageRetriever;
-    
-    private final Logger logger = LoggerFactory.getLogger(PageParsingActor.class);
     
     public PageParsingActor(PageRetriever pageRetriever) {
         this.pageRetriever = pageRetriever;

@@ -1,16 +1,11 @@
 package de.fhopf.akka.actor;
 
-import akka.actor.Actor;
-import akka.actor.ActorRef;
-import akka.actor.Props;
-import akka.actor.UntypedActorFactory;
-
-import de.fhopf.akka.IndexerImpl;
-import de.fhopf.akka.PageRetriever;
-
 import org.apache.lucene.index.IndexWriter;
 
-import java.util.concurrent.CountDownLatch;
+import akka.actor.ActorRef;
+import akka.actor.Props;
+import de.fhopf.akka.IndexerImpl;
+import de.fhopf.akka.PageRetriever;
 
 
 /**
@@ -22,27 +17,9 @@ class SimpleActorMaster extends Master {
     private final ActorRef indexer;
     private final ActorRef parser;
 
-    public SimpleActorMaster(final PageRetriever pageRetriever, final IndexWriter indexWriter,
-        final CountDownLatch latch) {
-
-        super(latch);
-        this.indexer = getContext().actorOf(new Props(new UntypedActorFactory() {
-
-                        @Override
-                        public Actor create() {
-
-                            return new IndexingActor(new IndexerImpl(indexWriter));
-                        }
-                    }));
-
-        this.parser = getContext().actorOf(new Props(new UntypedActorFactory() {
-
-                        @Override
-                        public Actor create() {
-
-                            return new PageParsingActor(pageRetriever);
-                        }
-                    }));
+    public SimpleActorMaster(final PageRetriever pageRetriever, final IndexWriter indexWriter) {
+        this.indexer = getContext().actorOf(Props.create(IndexingActor.class, new IndexerImpl(indexWriter)));
+        this.parser = getContext().actorOf(Props.create(PageParsingActor.class, pageRetriever));
     }
 
     @Override
