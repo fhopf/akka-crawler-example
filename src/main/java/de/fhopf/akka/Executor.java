@@ -41,7 +41,7 @@ public class Executor {
         IndexWriter writer = null;
         IndexSearcher searcher = null;
         try {
-            File indexDir = new File(System.getProperty("java.io.tmpdir"), "index-" + System.currentTimeMillis());
+            File indexDir = new File(System.getProperty("java.io.tmpdir"), "akka-index");
             writer = openWriter(indexDir);
             
             StopWatch stopWatch = new LoggingStopWatch();
@@ -95,7 +95,8 @@ public class Executor {
         Directory dir = FSDirectory.open(indexDir);
 
         IndexWriterConfig config = new IndexWriterConfig(Version.LUCENE_35, new StandardAnalyzer(Version.LUCENE_35));
-
+        config.setOpenMode(IndexWriterConfig.OpenMode.CREATE);
+        
         return new IndexWriter(dir, config);
     }
 
