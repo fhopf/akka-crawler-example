@@ -5,6 +5,7 @@ import org.apache.lucene.index.IndexWriter;
 import akka.actor.ActorRef;
 import akka.actor.Props;
 import akka.routing.RoundRobinRouter;
+import de.fhopf.akka.Indexer;
 import de.fhopf.akka.IndexerImpl;
 import de.fhopf.akka.PageRetriever;
 import de.fhopf.akka.actor.IndexingActor;
@@ -19,16 +20,16 @@ import de.fhopf.akka.actor.PageParsingActor;
 class ParallelMaster extends Master {
 
     private final ActorRef parser;
-    private final ActorRef indexer;
+    private final ActorRef indexingActor;
 
-    public ParallelMaster(final IndexWriter indexWriter, final PageRetriever pageRetriever) {
+    public ParallelMaster(final Indexer indexer, final PageRetriever pageRetriever) {
         parser = getContext().actorOf(Props.create(PageParsingActor.class, pageRetriever).withRouter(new RoundRobinRouter(10)));
-        indexer = getContext().actorOf(Props.create(IndexingActor.class, new IndexerImpl(indexWriter)));
+        indexingActor = getContext().actorOf(Props.create(IndexingActor.class, indexer));
     }
 
     @Override
     protected ActorRef getIndexer() {
-        return indexer;
+        return indexingActor;
     }
 
     @Override

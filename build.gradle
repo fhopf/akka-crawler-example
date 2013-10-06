@@ -33,4 +33,12 @@ task runParallelActors(type: JavaExec) {
     classpath = sourceSets.main.runtimeClasspath
 }
 
+task runFailingActors(type: JavaExec) {
+    main = 'de.fhopf.akka.actor.parallel.FailingExecution'
+    classpath = sourceSets.main.runtimeClasspath
+}
 
+task runSupervisedActors(type: JavaExec) {
+    main = 'de.fhopf.akka.actor.parallel.FetchSupervisedExecution'
+    classpath = sourceSets.main.runtimeClasspath
+}
