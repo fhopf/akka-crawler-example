@@ -16,7 +16,7 @@ class ChaosMonkeyPageRetriever extends HtmlParserPageRetriever {
 
     @Override
     public PageContent fetchPageContent(String url) {
-        // this error rate is deducted from scientific measurements
+        // this error rate is derived from scientific measurements
         if (System.currentTimeMillis() % 20 == 0) {
             throw new RetrievalException("Something went horribly wrong when fetching the page.");
         }
