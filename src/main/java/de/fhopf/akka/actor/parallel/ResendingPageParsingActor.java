@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import scala.Option;
 
 /**
- * Resends the failing message on restart. Careful: This can lead to livelylock.
+ * Resends the failing message on restart. Careful: This can lead to livelock.
  * @author Florian Hopf, www.florian-hopf.de
  */
 public class ResendingPageParsingActor extends PageParsingActor {
