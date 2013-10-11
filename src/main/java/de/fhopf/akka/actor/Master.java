@@ -32,6 +32,8 @@ public abstract class Master extends UntypedActor {
             getIndexer().tell(content, getSelf());
             visitedPageStore.addAll(content.getLinksToFollow());
 
+            logger.info(visitedPageStore.toString());
+
             if (visitedPageStore.isFinished()) {
                 getIndexer().tell(IndexingActor.COMMIT_MESSAGE, getSelf());
             } else {

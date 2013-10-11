@@ -53,4 +53,10 @@ public class VisitedPageStore {
     public boolean isFinished() {
         return pagesToVisit.isEmpty() && inProgress.isEmpty();
     }
+    
+    @Override
+    public String toString() {
+        return String.format("inProgress: %1$3s, allPages: %2$3s", inProgress.size(), allPages.size());
+    }
+
 }
