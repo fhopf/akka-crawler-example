@@ -24,7 +24,8 @@ class SupervisingActor extends Master {
     private final ActorRef indexingActor;
     
     public SupervisingActor(final Indexer indexer, final PageRetriever pageRetriever) {
-        this.pageParsingActor = getContext().actorOf(Props.create(ResendingPageParsingActor.class, pageRetriever).withRouter(new RoundRobinRouter(10)));
+        this.pageParsingActor = getContext().actorOf(Props.create(ResendingPageParsingActor.class, pageRetriever)
+                .withRouter(new RoundRobinRouter(10)).withDispatcher("worker-dispatcher"));
         this.indexingActor = getContext().actorOf(Props.create(IndexingActor.class, indexer));
     }
     
